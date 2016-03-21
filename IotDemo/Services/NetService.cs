@@ -193,8 +193,9 @@ namespace IotDemo.Services
 
         public void Stop()
         {
+            server.Dispose();
             tokenSource.Cancel();
-            PinChanged = null;
+            PinChanged = null;       
         }
     }
 }
