@@ -14,7 +14,7 @@ This app shows off some important patterns:
 * Service pattern - with abstractions
 * Inversion of Control (IoC) and Dependency Injection
 
-## Points of interests
+## Points of interest
 
 ### HttpServer class
 
