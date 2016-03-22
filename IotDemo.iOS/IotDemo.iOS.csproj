@@ -113,14 +113,7 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Services\IotClient.cs" />
-    <Compile Include="Services\IIotClient.cs" />
-    <Compile Include="Services\DummyIotClient.cs" />
   </ItemGroup>
+  <Import Project="..\IotDemo.Shared\IotDemo.Shared.projitems" Label="Shared" Condition="Exists('..\IotDemo.Shared\IotDemo.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
 
 namespace IotDemo.Services
 {
@@ -21,10 +22,7 @@ namespace IotDemo.Services
 			var response = await client.GetAsync(
 				new Uri("/led/" + id, UriKind.Relative));
 
-			using (response) 
-			{
-				return await ParseResponse (response);
-			}
+			return await ParseResponse (response);
 		}
 
 		public async Task<bool> TogglePinAsync(int id) 
@@ -33,11 +31,7 @@ namespace IotDemo.Services
 			var response = await client.PostAsync(
 				new Uri("/led/" + id, UriKind.Relative), 
 				new StringContent(str, Encoding.UTF8, "application/json"));
-
-			using (response) 
-			{
-				return await ParseResponse (response);
-			}
+			return await ParseResponse (response);
 		}
 
 		public async Task ClearPinAsync(int id) 
