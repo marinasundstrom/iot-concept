@@ -6,7 +6,7 @@ The app consists of a Graphical User Interface (GUI), built for the Universal Wi
 
 It also runs a custom quick-and-dirty HttpServer, built on the Windows Runtime API:s, that can receive REST-requests (JSON) to update or clear a given pin.
 
-This makes it possible for the iOS-app to connect to the server.
+This REST API allows for the iOS client app to connect to the server and control the GPIO-pins.
 
 ## Patterns
 
