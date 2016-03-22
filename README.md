@@ -2,7 +2,7 @@
 
 This project was initally created to experiment with the Raspberry Pi hardware running Windows 10 IoT.
 
-The app consists of a Graphical User Interface (GUI), built for the Universal Windows Platform (UWP), from which you can toggle Pin 4 (hardcoded).
+The app consists of a Graphical User Interface (GUI), built for the Universal Windows Platform (UWP), from which the user can toggle Pin 4 (hardcoded).
 
 It also runs a custom quick-and-dirty HttpServer, built on the Windows Runtime API:s, that can receive REST-requests (JSON) to update or clear a given pin.
 
