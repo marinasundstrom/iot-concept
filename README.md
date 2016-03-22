@@ -16,6 +16,24 @@ This app shows off some patterns that are popular in app development:
 * Service pattern - with abstractions
 * Inversion of Control (IoC) and Dependency Injection
 
+## Setup
+
+The tested setup consists of:
+
+* Raspberry Pi 2 with Windows 10 IoT
+* Touchscreen Display (the one from Raspberry Pi Foundation)
+* Breadboard (based on the standard Blinky example)
+	* LED
+	* Resistor
+
+The components on the breadboard are connected to Pin 4 and Ground (any) on the Raspberry Pi device.
+
+The iOS app can either run in the simulator or be deployed to an actual device.
+
+Make sure to change all addresses in the application so that the apps and devices work with your network setup.
+
+In IotDemo, check NetService, verify that the port is available, and in IotDemo.iOS, check IotClient, and modify the BaseURL.
+
 ## Points of interest
 
 Here are some notable things about this app.
