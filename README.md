@@ -6,6 +6,8 @@ The app consists of a Graphical User Interface (GUI), built for the Universal Wi
 
 It also runs a custom quick-and-dirty HttpServer, built on the Windows Runtime API:s, that can receive REST-requests (JSON) to update or clear a given pin.
 
+This makes it possible for the iOS-app to connect to the server.
+
 ## Patterns
 
 This app shows off some patterns that are popular in app development:
@@ -23,6 +25,12 @@ Here are some notable things about this app.
 This class mimics the HttpServer class that is available in the .NET Framework (desktop version). 
 
 Using concepts similar to those found in .NET, it allows for easy handling of HTTP requests and responses, but using Windows Runtime API:s instead.
+
+### iOS app
+
+Basic app, built with Xamarin.iOS, that lets the user toggle the hardcoded pin 4.
+
+Uses the same structure and patterns as the UWP app does.
 
 ## REST API
 
