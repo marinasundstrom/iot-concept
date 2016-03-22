@@ -1,4 +1,4 @@
-﻿# GPIO Server with GUI
+﻿# IoT concept app for UWP with iOS client app
 
 This project was initally created to experiment with the Raspberry Pi hardware running Windows 10 IoT.
 
