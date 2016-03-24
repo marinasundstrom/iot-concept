@@ -1,5 +1,6 @@
 ﻿using IotDemo.Utils;
 using System;
+using System.Net.Http;
 
 namespace IotDemo.Services
 {
@@ -13,7 +14,7 @@ namespace IotDemo.Services
 
     public class PinEventArgs : EventArgs
     {
-        public PinEventArgs(HttpServerRequest request, IPin pin)
+        public PinEventArgs(HttpListenerRequest request, IPin pin)
         {
             Request = request;
             Pin = pin;
@@ -21,6 +22,6 @@ namespace IotDemo.Services
 
         public IPin Pin { get; private set; }
 
-        public HttpServerRequest Request { get; private set; }
+        public HttpListenerRequest Request { get; private set; }
     }
 }

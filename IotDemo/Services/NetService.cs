@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Net;
 
 namespace IotDemo.Services
 {
     public sealed class NetService : INetService
     {
-        private HttpServer server;
+        private HttpListener server;
         private Task task;
         private CancellationTokenSource tokenSource;
 
@@ -29,7 +31,7 @@ namespace IotDemo.Services
 
         public void Start()
         {
-            server = new HttpServer(8083);
+            server = new HttpListener(IPAddress.Parse("192.168.1.101"), 8083);
 
             tokenSource = new CancellationTokenSource();
             CancellationToken ct = tokenSource.Token;
@@ -51,7 +53,7 @@ namespace IotDemo.Services
             }, ct);
         }
 
-        private async Task ProcessRequest(HttpServerContext context)
+        private async Task ProcessRequest(HttpListenerContext context)
         {
             try
             {
@@ -71,16 +73,16 @@ namespace IotDemo.Services
 
                         switch (context.Request.HttpMethod)
                         {
-                            case HttpMethod.Get:
+                            case "GET":
                                 await GetPin(context, pin);
                                 break;
 
-                            case HttpMethod.Post:
-                            case HttpMethod.Put:
+                            case "POST":
+                            case "PUT":
                                 await UpdatePin(context, pin);
                                 break;
 
-                            case HttpMethod.Delete:
+                            case "DELETE":
                                 await ClearPin(context, pin);
                                 break;
 
@@ -101,7 +103,7 @@ namespace IotDemo.Services
             }
         }
 
-        private static void InternalServerError(HttpServerContext context)
+        private static void InternalServerError(HttpListenerContext context)
         {
             using (var response = context.Response)
             {
@@ -109,7 +111,7 @@ namespace IotDemo.Services
             }
         }
 
-        private static void MethodNotAllowed(HttpServerContext context)
+        private static void MethodNotAllowed(HttpListenerContext context)
         {
             using (var response = context.Response)
             {
@@ -117,7 +119,7 @@ namespace IotDemo.Services
             }
         }
 
-        private async Task ClearPin(HttpServerContext context, IPin pin)
+        private async Task ClearPin(HttpListenerContext context, IPin pin)
         {
             bool currentState = false;
             pin.Write(currentState ? PinValue.High : PinValue.Low);
@@ -130,12 +132,12 @@ namespace IotDemo.Services
             PinChanged?.Invoke(this, new PinEventArgs(context.Request, pin));
         }
 
-        private async Task UpdatePin(HttpServerContext context, IPin pin)
+        private async Task UpdatePin(HttpListenerContext context, IPin pin)
         {
             var request = context.Request;
             var inputStream = request.InputStream;
             var currentState = pin.Read() == PinValue.High;
-            using (var streamReader = new StreamReader(inputStream.AsStreamForRead()))
+            using (var streamReader = new StreamReader(inputStream))
             {
                 var content = await streamReader.ReadToEndAsync();
                 var obj = JObject.Parse(content);
@@ -169,7 +171,7 @@ namespace IotDemo.Services
             PinChanged?.Invoke(this, new PinEventArgs(request, pin));
         }
 
-        private static async Task GetPin(HttpServerContext context, IPin pin)
+        private static async Task GetPin(HttpListenerContext context, IPin pin)
         {
             var currentState = pin.Read() == PinValue.High;
             using (var response = context.Response)
@@ -178,7 +180,7 @@ namespace IotDemo.Services
             }
         }
 
-        private static async Task RespondPinValue(HttpServerContext context, int id, bool state)
+        private static async Task RespondPinValue(HttpListenerContext context, int id, bool state)
         {
             var response = context.Response;
 
@@ -186,7 +188,7 @@ namespace IotDemo.Services
             response.Headers["Location"] = context.Request.Url.ToString();
 
             var outputStream = response.OutputStream;
-            var stream = outputStream.AsStreamForWrite();
+            var stream = outputStream;
             var streamWriter = new StreamWriter(stream) { AutoFlush = true };
             await streamWriter.WriteAsync("{ \"id\": " + id + ", \"state\": " + state + " }");
         }

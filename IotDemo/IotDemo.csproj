@@ -105,8 +105,6 @@
     <Compile Include="Services\INetService.cs" />
     <Compile Include="Services\NetService.cs" />
     <Compile Include="Utils\Dispatcher.cs" />
-    <Compile Include="Utils\HttpResponseStatusCodeExtensions.cs" />
-    <Compile Include="Utils\HttpServer.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
