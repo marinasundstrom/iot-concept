@@ -38,6 +38,7 @@ namespace IotDemo.Services
 
             task = Task.Run(async () =>
             {
+                server.Start();
                 while (server.IsListening)
                 {
                     try
