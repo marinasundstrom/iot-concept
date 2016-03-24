@@ -29,7 +29,9 @@ namespace IotDemo.Services
 
     public enum PinMode
     {
-        In,
-        Out
+        Input,
+        Output,
+        InputPullUp,
+        InputPullDown
     }
 }

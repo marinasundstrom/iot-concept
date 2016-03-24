@@ -104,10 +104,16 @@ namespace IotDemo.Services
                 switch (mode)
                 {
                     case GpioPinDriveMode.Input:
-                        return PinMode.In;
+                        return PinMode.Input;
 
                     case GpioPinDriveMode.Output:
-                        return PinMode.Out;
+                        return PinMode.Output;
+
+                    case GpioPinDriveMode.InputPullDown:
+                        return PinMode.InputPullDown;
+
+                    case GpioPinDriveMode.InputPullUp:
+                        return PinMode.InputPullUp;
                 }
 
                 throw new Exception();
@@ -119,11 +125,18 @@ namespace IotDemo.Services
             GpioPinDriveMode newMode = GpioPinDriveMode.Output;
             switch (mode)
             {
-                case PinMode.In:
+                case PinMode.Input:
                     newMode = GpioPinDriveMode.Input;
                     break;
-                case PinMode.Out:
+                case PinMode.Output:
                     newMode = GpioPinDriveMode.Output;
+                    break;
+
+                case PinMode.InputPullUp:
+                    newMode = GpioPinDriveMode.InputPullUp;
+                    break;
+                case PinMode.InputPullDown:
+                    newMode = GpioPinDriveMode.InputPullDown;
                     break;
             }
             _pin.SetDriveMode(newMode);
@@ -131,7 +144,7 @@ namespace IotDemo.Services
 
         public void Dispose()
         {
-            _pin.Dispose();
+            //_pin.Dispose();
             _service._pins.Remove(this);
             ValueChanged = null;
         }

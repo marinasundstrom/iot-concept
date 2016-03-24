@@ -27,7 +27,7 @@ namespace IotDemo.ViewModels
             pin = GpioService.OpenPin(4);
             pin.ValueChanged += Pin_PinValueChanged;
 
-            pin.SetMode(PinMode.Out);
+            pin.SetMode(PinMode.Output);
             pin.Write(PinValue.Low);
 
             NetService.PinChanged += NetService_PinChanged;
