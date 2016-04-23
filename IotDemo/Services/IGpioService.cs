@@ -14,11 +14,12 @@ namespace IotDemo.Services
     {
         PinMode Mode { get; }
         int PinNumber { get; }
+        TimeSpan DebounceTimeout { get; set; }
         PinValue Read();
         void SetMode(PinMode mode);
         void Write(PinValue value);
 
-        event EventHandler ValueChanged;
+        event EventHandler<GPinEventArgs> ValueChanged;
     }
 
     public enum PinValue

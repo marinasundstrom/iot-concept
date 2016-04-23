@@ -56,12 +56,18 @@ namespace IotDemo.Services
             private set;
         }
 
-        public event EventHandler ValueChanged;
+        public TimeSpan DebounceTimeout
+        {
+            get;
+            set;
+        }
+
+        public event EventHandler<GPinEventArgs> ValueChanged;
 
         public void Dispose()
         {
             _value = PinValue.Low;
-            ValueChanged?.Invoke(this, new EventArgs());
+            ValueChanged?.Invoke(this, new GPinEventArgs(GpioPinEdge.FallingEdge));
             _service._pins.Remove(this);
             ValueChanged = null;
         }
@@ -79,7 +85,7 @@ namespace IotDemo.Services
         public void Write(PinValue value)
         {
             _value = value;
-            ValueChanged?.Invoke(this, new EventArgs());
+            ValueChanged?.Invoke(this, new GPinEventArgs(GpioPinEdge.FallingEdge));
         }
     }
 }

@@ -44,7 +44,7 @@ namespace IotDemo.Services
         private readonly GpioPin _pin;
         private readonly GpioService _service;
 
-        public event EventHandler ValueChanged;
+        public event EventHandler<GPinEventArgs> ValueChanged;
 
         public Pin(GpioService service, GpioPin pin)
         {
@@ -55,7 +55,7 @@ namespace IotDemo.Services
 
         private void _pin_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs args)
         {
-            ValueChanged?.Invoke(this, new EventArgs());
+            ValueChanged?.Invoke(this, new GPinEventArgs((GpioPinEdge)args.Edge));
         }
 
         public int PinNumber
@@ -64,6 +64,12 @@ namespace IotDemo.Services
             {
                 return _pin.PinNumber;
             }
+        }
+
+        public TimeSpan DebounceTimeout
+        {
+            get { return _pin.DebounceTimeout; }
+            set { _pin.DebounceTimeout = value;  }
         }
 
         public void Write(PinValue value)
@@ -148,5 +154,29 @@ namespace IotDemo.Services
             _service._pins.Remove(this);
             ValueChanged = null;
         }
+    }
+
+    public class GPinEventArgs : EventArgs
+    {
+        private GpioPinEdge edge;
+
+        public GPinEventArgs(GpioPinEdge edge)
+        {
+            this.edge = edge;
+        }
+
+        public GpioPinEdge Edge
+        {
+            get
+            {
+                return edge;
+            }
+        }
+    }
+
+    public enum GpioPinEdge
+    {
+        FallingEdge,
+        RisingEdge
     }
 }

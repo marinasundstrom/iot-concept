@@ -2,7 +2,7 @@
 
 This project was initally created to experiment with the Raspberry Pi hardware running Windows 10 IoT.
 
-The app consists of a Graphical User Interface (GUI), built for the Universal Windows Platform (UWP), from which the user can toggle Pin 4 (hardcoded).
+The app consists of a Graphical User Interface (GUI), built for the Universal Windows Platform (UWP), from which the user can toggle any of 4 pins.
 
 It also runs a custom quick-and-dirty HttpServer, built on the Windows Runtime API:s, that can receive REST-requests (JSON) to update or clear a given pin.
 
@@ -18,15 +18,17 @@ This app shows off some patterns that are popular in app development:
 
 ## Setup
 
-The tested setup consists of:
+The setup that has been used consists of:
 
 * Raspberry Pi 2 with Windows 10 IoT
 * Touchscreen Display (the one from Raspberry Pi Foundation)
 * Breadboard (based on the standard Blinky example)
-	* LED
-	* Resistor
+	* Relay (x4)
+* Alternative: Windows IoT Remote Client (for actual screen to Raspberry Pi)
 
-The components on the breadboard are connected to Pin 4 and Ground (any) on the Raspberry Pi device.
+The relays on the breadboard are connected to GPIO pins (for output) 4, 5, 6, 26, Voltage (5 V) and Ground on the Raspberry Pi device.
+
+GPIO pin 21 is set to input and act as "clear all" (reset) or "set all" depending on the state of the output pins.
 
 The iOS app can either run in the simulator or be deployed to an actual device.
 
@@ -44,11 +46,15 @@ This class mimics the HttpServer class that is available in the .NET Framework (
 
 Using concepts similar to those found in .NET, it allows for easy handling of HTTP requests and responses, but using Windows Runtime API:s instead.
 
-### iOS app
+### Android app
 
-Basic app, built with Xamarin.iOS, that lets the user toggle the hardcoded pin 4.
+Basic app, built with Xamarin.Android, that lets the user toggle any of the four pins.
 
 Uses the same structure and patterns as the UWP app does.
+
+### iOS app
+
+Has not been implemented.
 
 ## REST API
 

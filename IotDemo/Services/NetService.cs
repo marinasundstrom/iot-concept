@@ -31,7 +31,7 @@ namespace IotDemo.Services
 
         public void Start()
         {
-            server = new HttpListener(IPAddress.Parse("192.168.1.101"), 8083);
+            server = new HttpListener(IPAddress.Parse("192.168.1.102"), 8083);
 
             tokenSource = new CancellationTokenSource();
             CancellationToken ct = tokenSource.Token;
@@ -41,14 +41,17 @@ namespace IotDemo.Services
                 server.Start();
                 while (server.IsListening)
                 {
-                    try
+                    var context = await server.GetContextAsync();
+                    using (var respone = context.Response)
                     {
-                        var context = await server.GetContextAsync();
-                        await ProcessRequest(context);
-                    }
-                    catch (Exception exc)
-                    {
-                        Debug.WriteLine(exc.ToString());
+                        try
+                        {
+                            await ProcessRequest(context);
+                        }
+                        catch (Exception exc)
+                        {
+                            Debug.WriteLine(exc.ToString());
+                        }
                     }
                 }
             }, ct);
@@ -66,7 +69,7 @@ namespace IotDemo.Services
 
                 if (parts.Length == 2)
                 {
-                    if (parts[0] == "led")
+                    if (parts[0] == "pin")
                     {
                         var id = int.Parse(parts[1]);
 
@@ -106,18 +109,12 @@ namespace IotDemo.Services
 
         private static void InternalServerError(HttpListenerContext context)
         {
-            using (var response = context.Response)
-            {
-                response.InternalServerError();
-            }
+            context.Response.InternalServerError();
         }
 
         private static void MethodNotAllowed(HttpListenerContext context)
         {
-            using (var response = context.Response)
-            {
-                response.MethodNotAllowed();
-            }
+            context.Response.MethodNotAllowed();
         }
 
         private async Task ClearPin(HttpListenerContext context, IPin pin)
@@ -125,10 +122,7 @@ namespace IotDemo.Services
             bool currentState = false;
             pin.Write(currentState ? PinValue.High : PinValue.Low);
 
-            using (var response = context.Response)
-            {
-                await RespondPinValue(context, pin.PinNumber, currentState);
-            }
+            await RespondPinValue(context, pin.PinNumber, currentState);
 
             PinChanged?.Invoke(this, new PinEventArgs(context.Request, pin));
         }
@@ -164,10 +158,7 @@ namespace IotDemo.Services
 
             pin.Write(currentState ? PinValue.High : PinValue.Low);
 
-            using (var response = context.Response)
-            {
-                await RespondPinValue(context, pin.PinNumber, currentState);
-            }
+            await RespondPinValue(context, pin.PinNumber, currentState);
 
             PinChanged?.Invoke(this, new PinEventArgs(request, pin));
         }
@@ -175,10 +166,7 @@ namespace IotDemo.Services
         private static async Task GetPin(HttpListenerContext context, IPin pin)
         {
             var currentState = pin.Read() == PinValue.High;
-            using (var response = context.Response)
-            {
-                await RespondPinValue(context, pin.PinNumber, currentState);
-            }
+            await RespondPinValue(context, pin.PinNumber, currentState);
         }
 
         private static async Task RespondPinValue(HttpListenerContext context, int id, bool state)
@@ -191,14 +179,14 @@ namespace IotDemo.Services
             var outputStream = response.OutputStream;
             var stream = outputStream;
             var streamWriter = new StreamWriter(stream) { AutoFlush = true };
-            await streamWriter.WriteAsync("{ \"id\": " + id + ", \"state\": " + state + " }");
+            await streamWriter.WriteAsync("{ \"id\": " + id + ", \"state\": " + state.ToString().ToLower() + " }");
         }
 
         public void Stop()
         {
             server.Dispose();
             tokenSource.Cancel();
-            PinChanged = null;       
+            PinChanged = null;
         }
     }
 }

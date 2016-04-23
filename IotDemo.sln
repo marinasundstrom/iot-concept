@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IotDemo", "IotDemo\IotDemo.csproj", "{94583C52-4089-4553-A4FF-14ED4B6F3D3A}"
 EndProject
@@ -20,7 +20,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "IotDemo.Shared", "IotDemo.S
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		IotDemo.Shared\IotDemo.Shared.projitems*{10e3d974-5120-4ffb-b7b2-d4af2b36f37e}*SharedItemsImports = 4
 		IotDemo.Shared\IotDemo.Shared.projitems*{03e50e72-33f0-4dbb-afb4-13a782cb1889}*SharedItemsImports = 13
+		IotDemo.Shared\IotDemo.Shared.projitems*{1f7517cf-4ce0-4878-9ab8-756aa15082fc}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,7 +42,6 @@ Global
 		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|ARM.ActiveCfg = Debug|ARM
 		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|ARM.Build.0 = Debug|ARM
-		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|ARM.Deploy.0 = Debug|ARM
 		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|iPhone.ActiveCfg = Debug|x86
 		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|iPhoneSimulator.ActiveCfg = Debug|x86
 		{94583C52-4089-4553-A4FF-14ED4B6F3D3A}.Debug|x64.ActiveCfg = Debug|x64
@@ -87,8 +88,10 @@ Global
 		{10E3D974-5120-4FFB-B7B2-D4AF2B36F37E}.Release|x86.Build.0 = Release|iPhone
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|ARM.Deploy.0 = Debug|Any CPU
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{1F7517CF-4CE0-4878-9AB8-756AA15082FC}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU

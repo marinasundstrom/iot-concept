@@ -27,8 +27,8 @@ namespace IotDemo
 			base.ViewDidLoad ();
 			// Perform any additional setup after loading the view, typically from a nib.
 
-			var binding = this.SetBinding (() => ViewModel.PinState)
-				.WhenSourceChanges(() => toggleButton.TitleLabel.Text = ViewModel.PinState.ToString());
+			//var binding = this.SetBinding (() => ViewModel.PinState)
+			//	.WhenSourceChanges(() => toggleButton.TitleLabel.Text = ViewModel.PinState.ToString());
 
 			toggleButton.SetCommand("TouchUpInside", ViewModel.SendCommand);
 

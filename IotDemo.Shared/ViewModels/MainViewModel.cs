@@ -2,6 +2,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Threading.Tasks;
 using IotDemo.Services;
+using System.Collections.ObjectModel;
 
 namespace IotDemo.ViewModels
 {
@@ -19,51 +20,62 @@ namespace IotDemo.ViewModels
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-		readonly int pin = 4;
-
-		RelayCommand sendCommand;
-		bool pinState = false;
+        RelayCommand sendCommand;
+        bool pinState = false;
+        private Pin selectedPin;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-		public MainViewModel(IIotClient client)
+        public MainViewModel(IIotClient client)
         {
-			Client = client;
+            Client = client;
+
+            Pins = new ObservableCollection<Pin>();
         }
 
-		public async Task Initialize() 
-		{
-			PinState = await Client.GetPinAsync(pin);
-		}
+        public async Task Initialize()
+        {
+            Pins.Clear();
 
-		public RelayCommand SendCommand 
-		{
-			get
-			{ 
-				return sendCommand ?? (sendCommand = new RelayCommand(async () => {
-					PinState = await Client.TogglePinAsync(pin);
-				}));
-			}
-		}
+            Pins.Add(new Pin("Port 1", 4));
+            Pins.Add(new Pin("Port 2", 5));
+            Pins.Add(new Pin("Port 3", 6));
+            Pins.Add(new Pin("Port 4", 26));
 
-		public bool PinState 
-		{
-			get 
-			{ 
-				return pinState;
-			}
+            foreach(var pin in Pins) {
+                pin.State = await Client.GetPinAsync(pin.Id);
+            }
+        }
 
-			set 
-			{ 
-				if (pinState != value) 
-				{
-					pinState = value;
-					RaisePropertyChanged ();
-				}
-			}
-		}
+        public RelayCommand SendCommand
+        {
+            get
+            {
+                return sendCommand ?? (sendCommand = new RelayCommand(async () =>
+                {
+                    SelectedPin.State = await Client.TogglePinAsync(SelectedPin.Id);
+                }));
+            }
+        }
 
-		public IIotClient Client { get; }
+        public IIotClient Client { get; }
+        internal ObservableCollection<Pin> Pins { get; private set; }
+
+        public Pin SelectedPin
+        {
+            get
+            {
+                return selectedPin;
+            }
+            set
+            {
+                if(selectedPin != value)
+                {
+                    selectedPin = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

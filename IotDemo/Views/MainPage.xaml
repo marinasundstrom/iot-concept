@@ -9,7 +9,13 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ToggleSwitch x:Name="toggleButton" Header="Pin 4" IsOn="{Binding Pin1, Mode=TwoWay}" HorizontalAlignment="Left" Margin="39,41,0,0" VerticalAlignment="Top" Height="73" Width="100"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="198,67,0,0" TextWrapping="Wrap" Text="{Binding ModifiedBy}" VerticalAlignment="Top" Width="482" Height="47"/>
+        <ItemsControl ItemsSource="{Binding Pins}" Margin="39,41,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ToggleSwitch x:Name="toggleButton" Header="{Binding Title}" IsOn="{Binding Value, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="0,0,0,20"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!--<TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="198,67,0,0" TextWrapping="Wrap" Text="{Binding ModifiedBy}" VerticalAlignment="Top" Width="482" Height="47"/>-->
     </Grid>
 </Page>
